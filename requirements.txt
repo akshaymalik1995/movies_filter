@@ -2,3 +2,6 @@ pandas
 streamlit
 numpy
 openpyxl
+schedule
+beautifulsoup4
+requests

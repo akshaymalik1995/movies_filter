@@ -37,7 +37,7 @@ if year != "All":
 if rating != "All":
     filtered_df = filtered_df[filtered_df['rating'] >= float(rating[:-1])]
     
-show_all = st.button("Show All")
+
 if not filtered_df.empty:
     show_df = filtered_df[['name', 'rating', 'year', 'genre']].sort_values(by=['year'], ascending=False)
     st.table(show_df.head(1000).reset_index(drop=True))
