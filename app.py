@@ -24,11 +24,24 @@ rating = st.sidebar.selectbox("Select Rating", rating_list)
 
 filtered_df = df.copy()
 
+genre_df = pd.DataFrame({
+            
+            "name": [],
+            "year": [],
+            "rating":[],
+            "actors" : [],
+            "genre" : [],
+            "duration" : []
+    })
 
-
+# if genres:
+#     for genre in genres:
+#         filtered_df = filtered_df[filtered_df['genre'].str.contains(genre) == True]
 if genres:
     for genre in genres:
-        filtered_df = filtered_df[filtered_df['genre'].str.contains(genre) == True]
+        genre_df = pd.concat([genre_df, filtered_df[filtered_df['genre'].str.contains(genre) == True]], ignore_index=True)
+    filtered_df = genre_df
+    
 
 
 if year != "All":
@@ -37,6 +50,7 @@ if year != "All":
 if rating != "All":
     filtered_df = filtered_df[filtered_df['rating'] >= float(rating[:-1])]
     
+
 
 if not filtered_df.empty:
     show_df = filtered_df[['name', 'rating', 'year', 'genre']].sort_values(by=['year'], ascending=False)
