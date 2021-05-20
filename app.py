@@ -6,8 +6,12 @@ import numpy as np
 
 df = pd.read_excel("cleaned_movies_data.xlsx")
 
-
-
+df['rating'] = df['rating'] * 10
+def map_name(x):
+    x = x[:-4]
+    x = x.strip()
+    return x
+df['name'] = df['name'].map(map_name)
 
 genres = st.sidebar.multiselect("Select Genres", ["Action" , "Adventure", "Animation" , "Comedy", "Crime" , "Drama" ,  "Documentary" ,  "Science Fiction",  "Family", "History", "Horror" ,"Fantasy", "Mystery" ,"Romance" ,"Thriller" ,"War" ,"Western"])
 
@@ -19,7 +23,7 @@ year = st.sidebar.selectbox("Select Year", years_list)
 
 
 rating_list = ["All"]
-rating_list.extend(["9+","8+","7+","6+","5+","4+","3+","2+","1+","0+"])
+rating_list.extend(["90+","80+","70+","60+","50+","40+","30+","20+","10+","00+"])
 rating = st.sidebar.selectbox("Select Rating", rating_list)
 
 filtered_df = df.copy()
