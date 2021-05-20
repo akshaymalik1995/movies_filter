@@ -44,7 +44,7 @@ genre_df = pd.DataFrame({
 if genres:
     for genre in genres:
         genre_df = pd.concat([genre_df, filtered_df[filtered_df['genre'].str.contains(genre) == True]], ignore_index=True)
-    filtered_df = genre_df
+    filtered_df = genre_df.drop_duplicates()
     
 
 
@@ -63,6 +63,9 @@ if sort == "rating":
     sort_list = ['rating']
 if sort == "year + rating":
     sort_list = ['year', 'rating']
+
+
+
 
 
 
