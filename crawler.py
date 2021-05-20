@@ -127,23 +127,23 @@ data = {
             "genre" : [],
             "duration" : []
     }
-def run():
-    cleaned_dataset = pd.read_excel("cleaned_movies_data.xlsx")
-    
-    df = pd.DataFrame(crawler(0, 1))
-    df = df.replace("None", np.nan)
-    df = df.dropna(how="any")
-    df = df.astype({'rating': "float64"})
-    df1 = pd.concat([df, cleaned_dataset], ignore_index=True)
-    df1 = df1.drop_duplicates(subset=['name'], keep='last')
-    df1 = df1[df1['rating'] != 0]
-    df1 = df1[df1['genre'].str.isnumeric() == False]
-    df1.to_excel("cleaned_movies_data.xlsx", index=False)
+# def run():
+cleaned_dataset = pd.read_excel("cleaned_movies_data.xlsx")
+
+df = pd.DataFrame(crawler(1, 2))
+df = df.replace("None", np.nan)
+df = df.dropna(how="any")
+df = df.astype({'rating': "float64"})
+df1 = pd.concat([df, cleaned_dataset], ignore_index=True)
+df1 = df1.drop_duplicates(subset=['name'], keep='last')
+df1 = df1[df1['rating'] != 0]
+df1 = df1[df1['genre'].str.isnumeric() == False]
+df1.to_excel("cleaned_movies_data.xlsx", index=False)
 
 
-schedule.every(30).minutes.do(run)
+# schedule.every(30).minutes.do(run)
 
 
-while 1:
-    schedule.run_pending()
-    time.sleep(1)
+# while 1:
+#     schedule.run_pending()
+#     time.sleep(1)
