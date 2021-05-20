@@ -54,10 +54,21 @@ if year != "All":
 if rating != "All":
     filtered_df = filtered_df[filtered_df['rating'] >= float(rating[:-1])]
     
+sort = st.sidebar.radio("Sort by", ["year","rating", "year + rating"])
+
+sort_list = []
+if sort == "year":
+    sort_list = ['year']
+if sort == "rating":
+    sort_list = ['rating']
+if sort == "year + rating":
+    sort_list = ['year', 'rating']
+
+
 
 
 if not filtered_df.empty:
-    show_df = filtered_df[['name', 'rating', 'year', 'genre']].sort_values(by=['year'], ascending=False)
+    show_df = filtered_df[['name', 'rating', 'year', 'genre']].sort_values(by=sort_list, ascending=False)
     st.table(show_df.head(1000).reset_index(drop=True))
 else:
     st.write("No Movies Available!")
