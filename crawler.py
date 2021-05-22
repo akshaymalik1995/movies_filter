@@ -137,7 +137,7 @@ if not df.empty:
     df = df.dropna(how="any")
     df = df.astype({'rating': "float64"})
     df1 = pd.concat([df, cleaned_dataset], ignore_index=True)
-    df1 = df1.drop_duplicates(subset=['name'], keep='last')
+    df1 = df1.drop_duplicates(subset=['name', 'year'], keep='last')
     df1 = df1[df1['rating'] != 0]
     df1 = df1[df1['genre'].str.isnumeric() == False]
     df1.to_excel("cleaned_movies_data.xlsx", index=False)
