@@ -19,7 +19,7 @@ df['name'] = df['name'].map(map_name)
 
 # SELECT WEBSITE OPTIONS
 
-tab = st.sidebar.selectbox("Choose what you want to do:", ['Explore movies','Find Similar movies', 'Search movies'])
+tab = st.sidebar.selectbox("Choose what you want to do:", ['Explore movies','Find similar movies', 'Search movies'])
 
 
 
@@ -37,19 +37,21 @@ def recommend_movie_model(id , data):
     for y in data.index:
         score = 0
         # Add rating score
-        score  += 20 - abs( data.iloc[id]['rating'] - df.iloc[y]['rating'])
+        score += 20 - abs(data.iloc[id]['rating'] - df.iloc[y]['rating'])
+        # Add year score
+        score += 100 - abs(data.iloc[id]['year'] - df.iloc[y]['year']) 
         # Adding genre score
         x_genre_list = set(data.iloc[id]['genre'].split())
         
         y_genre_list = set(data.iloc[y]['genre'].split())
         genre_inter = x_genre_list.intersection(y_genre_list)
-        score += len(genre_inter) * 20
+        score += len(genre_inter) * 30
         
         # Add actor score
         x_actor_list = set(data.iloc[id]['actors'].split())
         y_actor_list = set(data.iloc[y]['actors'].split())
         actor_inter = x_actor_list.intersection(y_actor_list)
-        score += len(actor_inter) * 20
+        score += len(actor_inter) * 30
         
         matrix[y] = score
        
@@ -85,13 +87,13 @@ if tab == "Search movies":
 
 # A COPY OF DATASET
 
-if tab == "Find Similar movies":
-    st.header("Find Similar movies")
+if tab == "Find similar movies":
+    st.header("Find similar movies")
     st.write("Be patient. It takes 30 seconds to find similar movies")
     movie_title = st.text_input("Enter the title of the movie")
-    movie_title = movie_title.strip()
+    movie_title = movie_title.lower().strip()
     if movie_title:
-        id_list = df.index[df['name'] == movie_title].to_list()
+        id_list = df.index[df['name'].str.lower() == movie_title].to_list()
         if id_list:
             id = id_list[0]
             df_recommend = recommend_movie_model(id, df)
