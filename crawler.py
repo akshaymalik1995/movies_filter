@@ -131,7 +131,7 @@ data = {
 
 cleaned_dataset = pd.read_excel("cleaned_movies_data.xlsx")
 
-df = pd.DataFrame(crawler(1, 2))
+df = pd.DataFrame(crawler(1, 10))
 if not df.empty:
     df = df.replace("None", np.nan)
     df = df.dropna(how="any")
